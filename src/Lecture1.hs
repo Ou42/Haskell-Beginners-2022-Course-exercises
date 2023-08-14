@@ -64,13 +64,7 @@ sumOfSquares x y = x * x + y * y
 >>> lastDigit 42
 2
 >>> lastDigit (-17)
-WAS WAS WAS WAS WAS WAS 7
-WAS WAS WAS WAS WAS NOW 3
-WAS WAS WAS WAS NOW 3
-WAS WAS WAS NOW 3
-WAS WAS NOW 7
-WAS NOW 7
-NOW 7
+7
 
 🕯 HINT: use the @mod@ function
 
@@ -83,9 +77,7 @@ lastDigit n = abs n `mod` 10
 difference between the biggest number and the smallest one.
 
 >>> minmax 7 1 4
-WAS WAS 6
-WAS NOW TODO
-NOW 6
+6
 
 Explanation: @minmax 7 1 4@ returns 6 because 7 is the biggest number
 and 1 is the smallest, and 7 - 1 = 6.
@@ -106,20 +98,10 @@ and returns a substring of a given string from the start position to
 the end (including).
 
 >>> subString 3 7 "Hello, world!"
-WAS WAS WAS WAS WAS "lo, w"
-WAS WAS WAS WAS NOW "lo, wor"
-WAS WAS WAS NOW "lo, worl"
-WAS WAS NOW "lo, w"
-WAS NOW "lo, w"
-NOW "lo, w"
+"lo, w"
 
 >>> subString 10 5 "Some very long String"
-WAS WAS WAS WAS WAS ""
-WAS WAS WAS WAS NOW "long Strin"
-WAS WAS WAS NOW "long String"
-WAS WAS NOW "long Str"
-WAS NOW ""
-NOW ""
+""
 
 This function can accept negative start and end position. Negative
 start position can be considered as zero (e.g. substring from the
@@ -132,9 +114,10 @@ subString start end str
   | end < start = []
   | otherwise   =
                   let
-                      takeX = (-2) + minmax start end 0
+                      clampedStart = max start 0
+                      takeX = (end+1) - max clampedStart 0
                   in
-                      take takeX $ drop start str
+                      take takeX $ drop clampedStart str
 
 {- | Write a function that takes a String — space separated numbers,
 and finds a sum of the numbers inside this string.
@@ -152,9 +135,7 @@ returns a string, saying how many elements of the list are strictly
 greater than the given number and strictly lower.
 
 >>> lowerAndGreater 3 [1 .. 9]
-WAS WAS "3 is greater than 2 elements and lower than 6 elements"
-WAS NOW "3 is greater than 2 and lower than 6elements"
-NOW "3 is greater than 2 elements and lower than 6 elements"
+"3 is greater than 2 elements and lower than 6 elements"
 
 Explanation: the list [1 .. 9] contains 9 elements: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 The given number 3 is greater than 2 elements (1 and 2)
