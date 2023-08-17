@@ -179,6 +179,41 @@ data Knight = Knight
     , knightEndurance :: Int
     }
 
+  -- * A chest contains a non-zero amount of gold and a possible treasure.
+  --   When defining the type of a treasure chest, you don't know what
+  --   treasures it stores inside, so your chest data type must be able
+  --   to contain any possible treasure.
+
+-- data Gold = GoldOne | Succ Gold
+-- newtype Treasure a = Treasure a
+
+-- data Chest a = Chest
+--     { chestGold :: Gold
+--     , chestTreasure :: Treasure a
+--     }
+
+data Chest a = MkChest
+    { chestGold     :: Int
+    , chestTreasure :: a
+    } deriving Show
+
+  -- * As a reward, the knight takes all the gold, the treasure and experience.
+  -- * Experience is calculated based on the dragon type. A dragon can be
+  --   either red, black or green.
+  -- * Red dragons grant 100 experience points, black dragons — 150, and green — 250.
+  -- * Stomachs of green dragons contain extreme acid and they melt any
+  --   treasure except gold. So green dragons have only gold as reward.
+
+-- data Dragon a = RedDragon a | BlackDragon a | GreenDragon a
+-- data DragonColor = RedDragon | BlackDragon | GreenDragon
+data DragonColor = RedDragon Int | BlackDragon Int | GreenDragon Int
+
+data Dragon treasure = Dragon
+    { dragonColor  :: DragonColor
+    , dragonXP     :: Int         -- 100, 150, 250
+    , reward       :: (Chest treasure, Bool)
+    }
+
 dragonFight = error "TODO"
 
 ----------------------------------------------------------------------------
@@ -200,7 +235,12 @@ False
 True
 -}
 isIncreasing :: [Int] -> Bool
-isIncreasing = error "TODO"
+isIncreasing []  = True
+isIncreasing [_] = True
+isIncreasing [x1, x2] = x1 < x2
+isIncreasing (x1:x2:xs)
+  | x1 < x2   = isIncreasing (x2:xs)
+  | otherwise = False
 
 {- | Implement a function that takes two lists, sorted in the
 increasing order, and merges them into new list, also sorted in the
