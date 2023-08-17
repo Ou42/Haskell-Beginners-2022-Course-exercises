@@ -116,7 +116,7 @@ spaces.
 🕯 HINT: look into Data.Char and Prelude modules for functions you may use.
 -}
 dropSpaces :: [Char] -> [Char]
-dropSpaces = filter (not . isSpace)
+dropSpaces = takeWhile (not . isSpace) . dropWhile isSpace
 
 {- |
 
