@@ -76,7 +76,16 @@ return the removed element.
 >>> removeAt 10 [1 .. 5]
 (Nothing,[1,2,3,4,5])
 -}
-removeAt = error "TODO"
+removeAt :: Int -> [a] -> (Maybe a, [a])
+removeAt i t
+-- "borrowed" from Relude.List.(!!?)
+    | i < 0     = (Nothing, t)
+    | otherwise = go i t []
+  where
+    go :: Int -> [a] -> [a] -> (Maybe a, [a])
+    go 0 (x:xs) accu = (Just x, accu ++ xs)
+    go j (y:ys) accu = go (j - 1) ys (accu ++ [y])
+    go _ [] accu = (Nothing, accu)
 
 {- | Write a function that takes a list of lists and returns only
 lists of even lengths.
