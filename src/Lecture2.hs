@@ -274,7 +274,14 @@ The algorithm of merge sort is the following:
 [1,2,3]
 -}
 mergeSort :: [Int] -> [Int]
-mergeSort = error "TODO"
+mergeSort []  = []
+mergeSort [x] = [x]
+mergeSort xs  =
+  let halfLen    = length xs `div` 2
+      firstHalf  = take halfLen xs
+      secondHalf = drop halfLen xs
+  in
+      merge (mergeSort firstHalf) (mergeSort secondHalf)
 
 
 {- | Haskell is famous for being a superb language for implementing
