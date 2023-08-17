@@ -42,6 +42,8 @@ module Lecture2
 
 -- VVV If you need to import libraries, do it after this line ... VVV
 
+import Data.Char (isSpace)
+
 -- ^^^ and before this line. Otherwise the test suite might fail  ^^^
 
 {- | Implement a function that finds a product of all the numbers in
@@ -113,7 +115,8 @@ spaces.
 
 🕯 HINT: look into Data.Char and Prelude modules for functions you may use.
 -}
-dropSpaces = error "TODO"
+dropSpaces :: [Char] -> [Char]
+dropSpaces = filter (not . isSpace)
 
 {- |
 
