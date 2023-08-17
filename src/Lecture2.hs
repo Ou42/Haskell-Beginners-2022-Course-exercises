@@ -64,7 +64,7 @@ lazyProduct (n:ns) = n * lazyProduct ns
 "ccaabb"
 -}
 duplicate :: [a] -> [a]
-duplicate = error "TODO"
+duplicate = concatMap (\x -> [x, x])
 
 {- | Implement function that takes index and a list and removes the
 element at the given position. Additionally, this function should also
