@@ -366,4 +366,7 @@ Write a function that takes and expression and performs "Constant
 Folding" optimization on the given expression.
 -}
 constantFolding :: Expr -> Expr
-constantFolding = error "TODO"
+constantFolding (Lit lit) = Lit lit
+constantFolding (Var varString) = Var varString
+constantFolding (Add (Lit lit1) (Lit lit2)) = Lit ((+) lit1 lit2)
+constantFolding (Add expr1 expr2) = Add (constantFolding expr1) (constantFolding expr2)
