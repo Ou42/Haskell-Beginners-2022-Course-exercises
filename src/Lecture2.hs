@@ -42,6 +42,7 @@ module Lecture2
 
 -- VVV If you need to import libraries, do it after this line ... VVV
 
+import Control.Applicative (liftA2)
 import Data.Char (isSpace)
 
 -- ^^^ and before this line. Otherwise the test suite might fail  ^^^
@@ -334,7 +335,14 @@ data EvalError
 It returns either a successful evaluation result or an error.
 -}
 eval :: Variables -> Expr -> Either EvalError Int
-eval = error "TODO"
+eval vars = go
+  where
+    go :: Expr -> Either EvalError Int
+    go (Lit lit) = Right lit
+    go (Var varString) = case lookup varString vars of
+                           Just varValue -> Right varValue
+                           _             -> Left $ VariableNotFound varString
+    go (Add expr1 expr2) = liftA2 (+) (go expr1) (go expr2)
 
 {- | Compilers also perform optimizations! One of the most common
 optimizations is "Constant Folding". It performs arithmetic operations
